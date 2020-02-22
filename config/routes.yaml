@@ -1,3 +1,7 @@
+
+index:
+    path: /
+    controller: App\Controller\ProductoController::index
 productover:
   path: /producto/ver/{id}
   controller: App\Controller\ProductoController::ver
