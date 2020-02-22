@@ -1,3 +1,103 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+productover:
+  path: /producto/ver/{id}
+  controller: App\Controller\ProductoController::ver
+productogestion:
+  path: /producto/gestion
+  controller: App\Controller\ProductoController::gestion
+productocrear:
+  path: /producto/crear
+  controller: App\Controller\ProductoController::crear
+productosave:
+  path: /producto/save/{id?}
+  controller: App\Controller\ProductoController::save
+productoeditar:
+  path: /producto/editar/{id}
+  controller: App\Controller\ProductoController::editar
+productoeliminar:
+  path: /producto/eliminar/{id}
+  controller: App\Controller\ProductoController::eliminar
+productoimagen:
+  path: /producto/imagen/{nombre_imagen}
+  controller: App\Controller\ProductoController::obtenerImagen
+
+
+carritoindex:
+  path: /carrito/index
+  controller: App\Controller\CarritoController::index
+carritoadd:
+  path: /carrito/add/{id}
+  controller: App\Controller\CarritoController::add
+carritodelete:
+  path: /carrito/delete/{indice_en_carrito}
+  controller: App\Controller\CarritoController::delete
+carritoup:
+  path: /carrito/up/{indice_en_carrito}
+  controller: App\Controller\CarritoController::up
+carritodown:
+  path: /carrito/down/{indice_en_carrito}
+  controller: App\Controller\CarritoController::down
+carritodeleteall:
+  path: /carrito/delete_all
+  controller: App\Controller\CarritoController::delete_all
+
+
+categoriaindex:
+  path: /categoria/index
+  controller: App\Controller\CategoriaController::index
+categoriaver:
+  path: /categoria/ver/{id}
+  controller: App\Controller\CategoriaController::ver
+categoriacrear:
+  path: /categoria/crear
+  controller: App\Controller\CategoriaController::crear
+categoriasave:
+  path: /categoria/save
+  controller: App\Controller\CategoriaController::save
+
+
+errorindex:
+  path: /error/index
+  controller: App\Controller\ErrorController::index
+error404:
+  path: /error/error404
+  controller: App\Controller\ErrorController::error404
+
+
+usuarioindex:
+  path: /usuario/index
+  controller: App\Controller\UsuarioController::index
+usuarioregistro:
+  path: /usuario/registro
+  controller: App\Controller\UsuarioController::registro
+usuariosave:
+  path: /usuario/save
+  controller: App\Controller\UsuarioController::save
+usuariologin:
+  path: /usuario/login
+  controller: App\Controller\UsuarioController::login
+logout:
+  path: /usuario/logout
+  controller: App\Controller\UsuarioController::logout
+
+
+pedidohacer:
+  path: /pedido/hacer
+  controller: App\Controller\PedidoController::hacer
+pedidoadd:
+  path: /pedido/add
+  controller: App\Controller\PedidoController::add
+pedido_confirmado:
+  path: /pedido/confirmado/{id}
+  controller: App\Controller\PedidoController::confirmado
+pedido_mispedidos:
+  path: /pedido/mis_pedidos
+  controller: App\Controller\PedidoController::mis_pedidos
+pedidodetalle:
+  path: /pedido/detalle/{id}
+  controller: App\Controller\PedidoController::detalle
+pedidogestion:
+  path: /pedido/gestion
+  controller: App\Controller\PedidoController::gestion
+pedido_estado:
+  path: /pedido/estado
+  controller: App\Controller\PedidoController::estado
