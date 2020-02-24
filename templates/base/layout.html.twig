@@ -1,24 +1,30 @@
 <!DOCTYPE HTML>
 <html lang="es">
 
-@include('base.head')
+{{ include('base/head.html.twig') }}
 
 <body>
 <div id="container">
 
-    @include('base.header')
+    {#
+    {{ include('base/header.html.twig') }}
 
-    @include('base.menu')
+    {{ include('base/menu.html.twig') }}
+
 
     <div id="content"><!-- BARRA LATERAL -->
 
-        @include('base.aside')
+        {{ include('base/aside.html.twig') }}
 
-        @yield('contenidocentral')
+        {% block contenidocentral %}{% endblock %}
 
     </div>
 
-    @include('base.footer')
+    {{ include('base/footer.html.twig') }}
+
+
+    #}
+
 </div>
 </body>
 </html>

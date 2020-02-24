@@ -10,7 +10,7 @@ class ProductoController extends AbstractController
 
     public function index(){
 
-        return $this->render('base.html.twig');
+        return $this->render('listado_productos.html.twig');
     }
 
     public function ver(){

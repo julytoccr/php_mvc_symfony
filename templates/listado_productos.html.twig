@@ -1,7 +1,11 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
+
+
+{% block contenidocentral %}
     <!-- CONTENIDO CENTRAL -->
+
+    {#
 
     @if(count($productos)>0)
         <div id="central"><h1>Algunos de nuestros productos</h1>
@@ -15,4 +19,5 @@
         <div id="central"><h1>Sin productos</h1>
         </div>
     @endif
-@endsection
+    #}
+{% endblock %}
