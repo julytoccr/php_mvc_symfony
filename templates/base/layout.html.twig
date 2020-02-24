@@ -6,24 +6,24 @@
 <body>
 <div id="container">
 
-    {#
     {{ include('base/header.html.twig') }}
 
     {{ include('base/menu.html.twig') }}
 
 
-    <div id="content"><!-- BARRA LATERAL -->
 
-        {{ include('base/aside.html.twig') }}
+      <div id="content"><!-- BARRA LATERAL -->
 
-        {% block contenidocentral %}{% endblock %}
+          {#{{ include('base/aside.html.twig') }}#}
 
-    </div>
+          {% block contenidocentral %}{% endblock %}
 
-    {{ include('base/footer.html.twig') }}
+      </div>
+
+      {{ include('base/footer.html.twig') }}
 
 
-    #}
+
 
 </div>
 </body>

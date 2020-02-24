@@ -3,14 +3,25 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Categorias;
+use App\Entity\Productos;
 
 class ProductoController extends AbstractController
 {
 
     public function index(){
 
-        return $this->render('listado_productos.html.twig');
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        //Leo todos los productos
+        $productos = $this->getDoctrine()->getRepository(Productos::class)->findAll();
+
+
+        return $this->render('listado_productos.html.twig',[
+            'categorias'=>$categorias,
+            'productos'=>$productos
+        ]);
     }
 
     public function ver(){

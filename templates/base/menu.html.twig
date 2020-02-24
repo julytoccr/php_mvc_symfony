@@ -2,12 +2,12 @@
 <nav id="menu">
     <ul>
         <li>
-            <a href="{{ route('index') }}">Inicio</a>
+            <a href="{{ path('index') }}">Inicio</a>
         </li>
-        @foreach($categorias as $categoria)
-            <li>
-                <a href="{{ route('categoriaver',['id'=>$categoria->id]) }}">{{ $categoria->nombre }}</a>
-            </li>
-        @endforeach
+        {% for categoria in categorias %}
+          <li>
+                 <a href="{{ path('categoriaver',{'id': categoria.id}) }}">{{ categoria.nombre }}</a>
+          </li>
+        {% endfor %}
     </ul>
 </nav>

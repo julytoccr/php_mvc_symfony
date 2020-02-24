@@ -1,23 +1,14 @@
 {% extends 'base/layout.html.twig' %}
 
-
-
 {% block contenidocentral %}
-    <!-- CONTENIDO CENTRAL -->
-
-    {#
-
-    @if(count($productos)>0)
-        <div id="central"><h1>Algunos de nuestros productos</h1>
-            @foreach($productos as $producto)
-
-                @include('base.dato_producto')
-
-            @endforeach
-        </div>
-    @else
-        <div id="central"><h1>Sin productos</h1>
-        </div>
-    @endif
-    #}
+ <!-- CONTENIDO CENTRAL -->
+ {% if productos|length >0 %}
+    <div id="central"><h1>Algunos de nuestros productos</h1>
+      {% for producto in productos %}
+          {{ include('base/dato_producto.html.twig') }}
+      {% endfor %}
+    </div>
+ {% else %}
+    <div id="central"><h1>Sin productos</h1></div>
+ {% endif %}
 {% endblock %}
