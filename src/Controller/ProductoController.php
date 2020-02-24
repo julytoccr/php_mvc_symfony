@@ -9,10 +9,8 @@ class ProductoController extends AbstractController
 {
 
     public function index(){
-        return $this->json([
-            'message' => 'Weaaalcome to your new controller!',
-            'path' => 'src/Controller/ProductoController.php',
-        ]);
+
+        return $this->render('base.html.twig');
     }
 
     public function ver(){
