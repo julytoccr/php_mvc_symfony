@@ -1,0 +1,14 @@
+<div class="product">
+    {{$producto->categoria->nombre}}
+    <a href="{{ route('productover',['id'=>$producto->id])}}">
+        <img src="{{route('productoimagen',['nombre_imagen'=>$producto->imagen])}}" />
+        <h2>{{$producto->nombre}}</h2>
+    </a>
+    <p>Precio : ${{$producto->precio}}</p>
+    <p>Stock : {{$producto->stock}}</p>
+    @if(($producto->stock)>0)
+        <a href="{{ route('carritoadd',['id' => $producto->id]) }}" class="button">Comprar</a>
+    @else
+        <h3>Sin stock</h3>
+    @endif
+</div>

@@ -1,0 +1,35 @@
+@extends('base.layout')
+
+@section('contenidocentral')
+    <!-- CONTENIDO CENTRAL -->
+    <div id="central">
+        <h1>Registrarse</h1>
+
+        @if(session('register'))
+            @if(session('register')=="complete")
+                <strong class="alert_green">Registro completado correctamente</strong>
+            @endif
+            @if(session('register')=="failed")
+                <strong class="alert_red">Registro fallido, introduce bien los datos</strong>
+            @endif
+        @endif
+
+        <form action="{{ route('usuariosave') }}" method="POST">
+            @csrf
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" required/>
+
+            <label for="apellidos">Apellidos</label>
+            <input type="text" name="apellidos" required/>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" required/>
+
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" required/>
+
+            <input type="submit" value="Registrarse" />
+        </form>
+
+    </div>
+@endsection

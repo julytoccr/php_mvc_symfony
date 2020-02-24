@@ -1,0 +1,48 @@
+@extends('base.layout')
+
+@section('contenidocentral')
+    <!-- CONTENIDO CENTRAL -->
+    <div id="central"><h1>Gestión de productos</h1>
+        @if(session('productoborrado'))
+            <strong class="alert_green">Producto {{session('productoborrado')}} borrado Correctamente</strong>
+        @endif
+        @if(session('altaproducto'))
+            @if(session('altaproducto')==1)
+                <strong class="alert_green">Producto Creado Correctamente</strong>
+            @else
+                <strong class="alert_red">Producto no creado</strong>
+            @endif
+        @endif
+        @if(session('updateproducto'))
+            @if(session('updateproducto')==1)
+                <strong class="alert_green">Producto Modificado Correctamente</strong>
+            @else
+                <strong class="alert_red">Producto no modificado</strong>
+            @endif
+        @endif
+        <a href={{ route('productocrear') }} class="button button-small">
+            Crear producto
+        </a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>PRECIO</th>
+                <th>STOCK</th>
+                <th>ACCIONES</th>
+            </tr>
+            @foreach($productos as $producto)
+                <tr>
+                    <td>{{$producto->id}}</td>
+                    <td>{{$producto->nombre}}</td>
+                    <td>{{$producto->precio}}</td>
+                    <td>{{$producto->stock}}</td>
+                    <td>
+                        <a href={{ route('productoeditar',['id'=>$producto['id']]) }} class="button button-gestion">Editar</a>
+                        <a href={{ route('productoeliminar',['id'=>$producto['id']]) }} class="button button-gestion button-red">Eliminar</a>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+@endsection

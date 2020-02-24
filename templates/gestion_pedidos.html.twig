@@ -1,0 +1,37 @@
+@extends('base.layout')
+
+@section('contenidocentral')
+    <!-- CONTENIDO CENTRAL -->
+
+
+    <div id="central">	<h1>Gestionar pedidos</h1>
+        @if(session('id'))
+            <strong class="alert_green">Pedido {{ session('id') }} modificado</strong>
+        @endif
+        <table>
+            <tr>
+                <th>Nº Pedido</th>
+                <th>Coste</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+            </tr>
+
+            @foreach($pedidos as $pedido)
+                <tr>
+                    <td>
+                        <a href={{route('pedidodetalle',['id'=>$pedido->id])}}>{{$pedido->id}}</a>
+                    </td>
+                    <td>
+                        {{$pedido->coste}} $
+                    </td>
+                    <td>
+                        {{$pedido->fecha}}			</td>
+                    <td>
+                        {{$pedido->estado}}			</td>
+                    <td>
+                        {{$pedido->usuario->nombre}}                </td>
+                </tr>
+            @endforeach
+        </table></div>
+@endsection

@@ -1,0 +1,13 @@
+@extends('base.layout')
+
+@section('contenidocentral')
+    <!-- CONTENIDO CENTRAL -->
+    <div id="central"><h1>Crear nueva categoria</h1>
+        <form action={{ route('categoriasave') }} method="POST">
+            @csrf
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" required/>
+            <input type="submit" value="Guardar" />
+        </form></div>
+    </div>
+@endsection

@@ -1,0 +1,13 @@
+<!-- MENU -->
+<nav id="menu">
+    <ul>
+        <li>
+            <a href="{{ route('index') }}">Inicio</a>
+        </li>
+        @foreach($categorias as $categoria)
+            <li>
+                <a href="{{ route('categoriaver',['id'=>$categoria->id]) }}">{{ $categoria->nombre }}</a>
+            </li>
+        @endforeach
+    </ul>
+</nav>

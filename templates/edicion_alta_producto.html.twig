@@ -1,0 +1,56 @@
+@extends('base.layout')
+
+@section('contenidocentral')
+    <!-- CONTENIDO CENTRAL -->
+    <div id="central">
+
+        @isset($producto)
+            <h1>Editar producto {{$producto->nombre}}</h1>
+        @else
+            <h1>Alta de producto</h1>
+        @endisset
+
+
+        <div class="form_container">
+
+            @isset($producto)
+                <form action={{ route('productosave',['id' => $producto->id]) }} method="POST" enctype="multipart/form-data">
+            @else
+                <form action={{ route('productosave') }} method="POST" enctype="multipart/form-data">
+            @endisset
+
+                @csrf
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value={{ isset($producto) ? $producto->nombre : '' }}>
+
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion">{{ isset($producto) ? $producto->descripcion : '' }}</textarea>
+
+                <label for="precio">Precio</label>
+                <input type="text" name="precio" value={{ isset($producto) ? $producto->precio : '' }}>
+
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" value={{ isset($producto) ? $producto->stock : '' }}>
+
+                <label for="categoria">Categoria</label>
+                <select name="categoria">
+                    @foreach($categorias as $categoria)
+                        @isset($producto)
+                          <option value={{$categoria->id}} {{ ($categoria->id==$producto->categoria_id) ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
+                        @else
+                          <option value={{$categoria->id}}>{{ $categoria->nombre }}</option>
+                        @endif
+                    @endforeach
+                </select>
+
+                <label for="imagen">Imagen</label>
+                    @isset($producto)
+                        <img src="{{route('productoimagen',['nombre_imagen'=>$producto->imagen])}}" class="img_carrito" />
+                    @endisset
+                <input type="file" name="imagen" />
+
+                <input type="submit" value="Guardar" />
+            </form>
+
+        </div></div>
+@endsection
