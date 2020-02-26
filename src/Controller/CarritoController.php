@@ -88,10 +88,8 @@ class CarritoController extends AbstractController
     }
 
     public function delete_all(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CarritoController.php',
-        ]);
+        $this->get('session')->clear();
+        return $this->redirectToRoute('index');
     }
 
 }
