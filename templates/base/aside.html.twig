@@ -1,19 +1,25 @@
 <aside id="lateral">
 
     <!-- Solo se muestra el carrito si hay algo en el-->
-    @if(count(session('carrito'))>0)
-    <?php $stats_carrito=statsCarrito(); ?>
-    <div id="carrito" class="block_aside">
-        <h3>Mi carrito</h3>
-        <ul>
-            <li><a href="{{ route('carritoindex') }}">Productos ({{ $stats_carrito['total_productos'] }})</a></li>
-            <li><a href="{{ route('carritoindex') }}">Total: {{ $stats_carrito['total_pesos'] }} $</a></li>
-            <li><a href="{{ route('carritoindex') }}">Ver el carrito</a></li>
+    {% set carrito= app.session.get('carrito') %}
+    {% if( carrito|length >0 ) %}
+        {% set total=0 %}
+        {% for elemento in carrito %}
+            {% set total = total+(elemento.unidades*elemento.precio) %}
+        {% endfor %}
+        <div id="carrito" class="block_aside">
+            <h3>Mi carrito</h3>
+            <ul>
+                <li><a href="{{ path('carritoindex') }}">Productos ({{ carrito|length }})</a></li>
+                <li><a href="{{ path('carritoindex') }}">Total: ${{ total }} </a></li>
+                <li><a href="{{ path('carritoindex') }}">Ver el carrito</a></li>
+            </ul>
+        </div>
+    {% endif %}
 
-        </ul>
-    </div>
-    @endif
 
+
+    {#
     <div id="login" class="block_aside">
         @if(session('validado')=="ok")
             <strong class="alert_green">¡ Bienvenido {{ (session('usuario'))->nombre }} !</strong>
@@ -50,4 +56,7 @@
             </ul>
         @endif
     </div>
+
+    #}
+
 </aside>
