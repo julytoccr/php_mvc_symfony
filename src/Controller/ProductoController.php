@@ -27,7 +27,7 @@ class ProductoController extends AbstractController
 
     public function ver(){
         return $this->json([
-            'message' => 'Weaaalcome to your new controller!',
+            'message' => 'vvv to your new controller!',
             'path' => 'src/Controller/ProductoController.php',
         ]);
     }
