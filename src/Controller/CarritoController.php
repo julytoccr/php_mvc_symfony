@@ -82,8 +82,12 @@ class CarritoController extends AbstractController
     }
 
     public function down($indice_en_carrito){
+
         $carrito = $this->get('session')->get('carrito');
-        $carrito[$indice_en_carrito]['unidades']--;
+        if(($carrito[$indice_en_carrito]['unidades'])==1)
+            unset($carrito[$indice_en_carrito]);
+        else
+            $carrito[$indice_en_carrito]['unidades']--;
         $this->get('session')->set('carrito',$carrito);
         return $this->redirectToRoute('carritoindex');
     }
