@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Categorias;
 use App\Entity\Productos;
 
@@ -66,10 +67,9 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    public function obtenerImagen(){
-        return $this->json([
-            'message' => 'Weaaalcome to your new controller!',
-            'path' => 'src/Controller/ProductoController.php',
-        ]);
+    public function obtenerImagen($nombre_imagen){
+
+        return new Response(@file_get_contents("assets/imagesremeras/$nombre_imagen"));
+
     }
 }

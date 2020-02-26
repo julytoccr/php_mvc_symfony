@@ -1,7 +1,7 @@
 <div class="product">
     {#{{$producto->categoria->nombre}}#}
     <a href="{{ path('productover',{'id': producto.id})}}">
-        {# <img src="{{ route('productoimagen',['nombre_imagen'=>$producto->imagen])}}" /> #}
+         <img src="{{ path('productoimagen',{'nombre_imagen': producto.imagen})}}" />
         <h2>{{producto.nombre}}</h2>
     </a>
     <p>Precio : ${{producto.precio}}</p>
