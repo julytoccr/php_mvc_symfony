@@ -1,11 +1,11 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
+{% block contenidocentral %}
     <div id="central"><h1>Carrito de la compra</h1>
-        @if(count($carrito)>0)
-            @if(session('errorenstock'))
+        {% if carrito|length >0 %}
+            {% if(app.session.get('errorenstock')) %}
                 <strong class="alert_green">No hay stock de algunos productos, revise</strong>
-            @endif
+            {% endif %}
             <table>
                 <tr>
                     <th>Imagen</th>
@@ -14,46 +14,46 @@
                     <th>Unidades</th>
                     <th>Eliminar</th>
                 </tr>
-                <?php $total=0; ?>
-                @foreach($carrito as $indice => $elemento)
-                    <tr>
+                {% set total = 0 %}
+                {% for indice,elemento in carrito %}
+                 <tr>
                         <td>
-                            @if($elemento['imagen'] != null)
-                                <img src="{{route('productoimagen',['nombre_imagen'=>$elemento['imagen']])}}" class="img_carrito" />
-                            @else
-                                <img src="{{route('productoimagen',['nombre_imagen'=>"camiseta.png"])}}" class="img_carrito" />
-                            @endif
+                            {% if(elemento.imagen != null) %}
+                                <img src="{{ path('productoimagen',{'nombre_imagen': elemento.imagen})}}" class="img_carrito"/>
+                            {% else %}
+                                <img src="{{ path('productoimagen',{'nombre_imagen': "camiseta.png"})}}" class="img_carrito"/>
+                            {% endif %}
                         </td>
                         <td>
-                            <a href="{{ route('productover',['id'=>$elemento['id']])}}"> {{$elemento['nombre']}}</a>
+                            <a href="{{ path('productover',{'id': elemento.id})}}"> {{elemento.nombre}}</a>
                         </td>
                         <td>
-                            {{$elemento['precio']}}
+                            {{elemento.precio}}
                         </td>
                         <td>
-                            {{ $elemento['unidades'] }}
+                            {{ elemento.unidades }}
                             <div class="updown-unidades">
-                                <a href="{{ route('carritoup',['indice_en_carrito'=>$indice]) }}" class="button">+</a>
-                                <a href="{{ route('carritodown',['indice_en_carrito'=>$indice]) }}" class="button">-</a>
+                                <a href="{{ path('carritoup',{'indice_en_carrito': indice}) }}" class="button">+</a>
+                                <a href="{{ path('carritodown',{'indice_en_carrito': indice}) }}" class="button">-</a>
                             </div>
                         </td>
                         <td>
-                            <a href="{{ route('carritodelete',['indice_en_carrito'=>$indice]) }}" class="button button-carrito button-red">Quitar producto</a>
+                            <a href="{{ path('carritodelete',{'indice_en_carrito': indice }) }}" class="button button-carrito button-red">Quitar producto</a>
                         </td>
                     </tr>
-                    <?php $total+=$elemento['unidades']*$elemento['precio']; ?>
-                @endforeach
+                    {% set total = total+(elemento.unidades*elemento.precio) %}
+                {% endfor %}
             </table>
             <br/>
             <div class="delete-carrito">
-                <a href="{{ route('carritodeleteall') }}" class="button button-delete button-red">Vaciar carrito</a>
+                <a href="{{ path('carritodeleteall') }}" class="button button-delete button-red">Vaciar carrito</a>
             </div>
             <div class="total-carrito">
-                <h3>Precio total: {{$total}}$</h3>
-                <a href="{{ route('pedidohacer') }}" class="button button-pedido">Hacer pedido</a>
+                <h3>Precio total: {{total}}$</h3>
+                <a href="{{ path('pedidohacer') }}" class="button button-pedido">Hacer pedido</a>
             </div>
-        @else
+        {% else %}
             <p>El carrito está vacio, añade algun producto</p>
-        @endif
+        {% endif %}
     </div>
-@endsection
+{% endblock %}
