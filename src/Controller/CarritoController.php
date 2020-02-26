@@ -66,11 +66,12 @@ class CarritoController extends AbstractController
         return $this->redirectToRoute('carritoindex');
     }
 
-    public function delete(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CarritoController.php',
-        ]);
+    public function delete($indice_en_carrito){
+
+        $carrito = $this->get('session')->get('carrito');
+        unset($carrito[$indice_en_carrito]);
+        $this->get('session')->set('carrito',$carrito);
+        return $this->redirectToRoute('carritoindex');
     }
 
     public function up(){
