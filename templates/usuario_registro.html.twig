@@ -1,21 +1,20 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
+{% block contenidocentral %}
     <!-- CONTENIDO CENTRAL -->
     <div id="central">
         <h1>Registrarse</h1>
+        {% for validado in app.session.flashbag.get('register') %}
+            {% if(validado) %}
+              {% if(validado)=="complete" %}
+                  <strong class="alert_green">Registro completado correctamente</strong>
+              {% else %}
+                  <strong class="alert_red">Registro fallido, introduce bien los datos</strong>
+              {% endif %}
+            {% endif %}
+        {% endfor %}
 
-        @if(session('register'))
-            @if(session('register')=="complete")
-                <strong class="alert_green">Registro completado correctamente</strong>
-            @endif
-            @if(session('register')=="failed")
-                <strong class="alert_red">Registro fallido, introduce bien los datos</strong>
-            @endif
-        @endif
-
-        <form action="{{ route('usuariosave') }}" method="POST">
-            @csrf
+        <form action="{{ path('usuariosave') }}" method="POST">
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" required/>
 
@@ -32,4 +31,5 @@
         </form>
 
     </div>
-@endsection
+{% endblock %}
+

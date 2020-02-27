@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Usuarios;
+use App\Entity\Categorias;
 
 
 
@@ -19,17 +20,41 @@ class UsuarioController extends AbstractController
     }
 
     public function registro(){
-        return $this->json([
-            'message' => 'registro to your new controller!',
-            'path' => 'src/Controller/UsuarioController.php',
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        return $this->render('usuario_registro.html.twig',[
+            'categorias'=>$categorias
         ]);
     }
 
-    public function save(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UsuarioController.php',
-        ]);
+    public function save(Request $request){
+
+        $salvado="failed";
+
+        $email=$request->request->get('email');
+        $password=$request->request->get('password');
+        $nombre=$request->request->get('nombre');
+        $apellido=$request->request->get('apellidos');
+
+        $usuario=new Usuarios();
+        $usuario->setApellidos($apellido);
+        $usuario->setEmail($email);
+        $usuario->setNombre($nombre);
+        $usuario->setPassword(password_hash($password, PASSWORD_BCRYPT, ['cost' => 4]));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($usuario);
+        $entityManager->flush();
+
+        $salvado="complete";
+
+        $this->addFlash(
+            'register',
+            $salvado
+        );
+
+        return $this->redirectToRoute('usuarioregistro');
     }
 
     public function login(Request $request){

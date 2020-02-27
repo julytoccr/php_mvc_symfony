@@ -35,8 +35,6 @@
 
         {% if app.session.get('identity') %}
                 {% set usuario_logueado= app.session.get('usuario') %}
-
-                   MENU DE OPCIONES
                 <h3>{{ usuario_logueado.getNombre }} {{ usuario_logueado.getApellidos }}</h3>
                 <ul>
                 {% if usuario_logueado.getRol=="admin" %}
