@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Usuarios;
+
+
 
 class UsuarioController extends AbstractController
 {
@@ -16,7 +20,7 @@ class UsuarioController extends AbstractController
 
     public function registro(){
         return $this->json([
-            'message' => 'Welcome to your new controller!',
+            'message' => 'registro to your new controller!',
             'path' => 'src/Controller/UsuarioController.php',
         ]);
     }
@@ -28,21 +32,33 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-    public function login(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UsuarioController.php',
-        ]);
+    public function login(Request $request){
+
+        $validado="noOk";
+
+        $email=$request->request->get('email');
+        $password=$request->request->get('password');
+
+        $usuario=$this->getDoctrine()->getRepository(Usuarios::class)
+            ->validar($email,$password);
+
+        if($usuario){
+            $validado="ok";
+            $this->get('session')->set('identity',true);
+            $this->get('session')->set('usuario',$usuario);
+        }
+
+        $this->addFlash(
+            'validado',
+            $validado
+        );
+
+        return $this->redirectToRoute('index');
     }
 
     public function logout(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UsuarioController.php',
-        ]);
+        $this->get('session')->clear();
+        return $this->redirectToRoute('index');
     }
-
-
-
 
 }

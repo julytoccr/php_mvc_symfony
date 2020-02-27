@@ -93,7 +93,7 @@ class CarritoController extends AbstractController
     }
 
     public function delete_all(){
-        $this->get('session')->clear();
+        $this->get('session')->remove('carrito');
         return $this->redirectToRoute('index');
     }
 
