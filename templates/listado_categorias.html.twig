@@ -1,32 +1,32 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
-    <!-- CONTENIDO CENTRAL -->
-    <div id="central"><h1>Gestionar categorias</h1>
+{% block contenidocentral %}
+<!-- CONTENIDO CENTRAL -->
+<div id="central"><h1>Gestionar categorias</h1>
+    {% for altacategoria in app.session.flashbag.get('altacategoria') %}
+       {% if(altacategoria)==1 %}
+            <strong class="alert_green">Categoria Creada Correctamente</strong>
+       {% else %}
+            <strong class="alert_red">Categoria no creada</strong>
+       {% endif %}
+    {% endfor %}
 
-        @if(session('altacategoria'))
-            @if(session('altacategoria')==1)
-                <strong class="alert_green">Categoria Creada Correctamente</strong>
-            @else
-                <strong class="alert_red">Categoria no creada</strong>
-            @endif
-        @endif
+    <a href="{{ path('categoriacrear') }}" class="button button-small">
+        Crear categoria
+    </a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+        </tr>
+        {% for categoria in categorias %}
+        <tr>
+            <td>{{categoria.getId}}</td>
+            <td>{{categoria.getNombre}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
 
-        <a href="{{ route('categoriacrear') }}" class="button button-small">
-            Crear categoria
-        </a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>NOMBRE</th>
-            </tr>
-            @foreach($categorias as $categoria)
-                <tr>
-                    <td>{{$categoria->id}}</td>
-                    <td>{{$categoria->nombre}}</td>
-                </tr>
-            @endforeach
-        </table>
-    </div>
-    </div>
-@endsection
+{% endblock %}

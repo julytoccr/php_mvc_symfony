@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Categorias;
@@ -11,9 +13,12 @@ use App\Entity\Productos;
 class CategoriaController extends AbstractController
 {
     public function index(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CategoriaController.php',
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)
+            ->findAll();
+
+        return $this->render('listado_categorias.html.twig',[
+            'categorias'=>$categorias
         ]);
     }
 
@@ -34,17 +39,36 @@ class CategoriaController extends AbstractController
     }
 
     public function crear(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CategoriaController.php',
-        ]);
+
+            //Tomo todas la categorias para pasarsela a la vista(menu)
+            $categorias = $this->getDoctrine()->getRepository(Categorias::class)
+                ->findAll();
+
+            return $this->render('crear_categoria.html.twig',[
+                'categorias'=>$categorias
+            ]);
+
     }
 
-    public function save(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CategoriaController.php',
-        ]);
+    public function save(Request $request){
+
+        $nombre=$request->request->get('nombre');
+
+        $categoria=new Categorias();
+        $categoria->setNombre($nombre);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($categoria);
+        $entityManager->flush();
+
+        $salvado="complete";
+
+        $this->addFlash(
+            'altacategoria',
+            1
+        );
+
+        return $this->redirectToRoute('categoriaindex');
     }
 
 
