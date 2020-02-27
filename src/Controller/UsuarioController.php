@@ -83,6 +83,10 @@ class UsuarioController extends AbstractController
 
     public function logout(){
         $this->get('session')->clear();
+        $this->addFlash(
+            'validado',
+            "chau"
+        );
         return $this->redirectToRoute('index');
     }
 
