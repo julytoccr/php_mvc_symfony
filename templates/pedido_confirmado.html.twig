@@ -1,35 +1,38 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
-    <!-- CONTENIDO CENTRAL -->
-    <div id="central">	<h1>Tu pedido se ha confirmado</h1>
-        <p>
-            Tu pedido ha sido guardado con exito, una vez que realices la transferencia
-            bancaria a la cuenta 7382947289239ADD con el coste del pedido, será procesado y enviado.
-        </p>
-        <br/>
-        <h3>Datos del pedido:</h3>
-        Número de pedido: {{$pedido->id}}   <br/>
-        Total a pagar: {{$pedido->coste}} $ <br/>
-        Productos:
+{% block contenidocentral %}
+<!-- CONTENIDO CENTRAL -->
+<div id="central">	<h1>Tu pedido se ha confirmado</h1>
+    <p>
+        Tu pedido ha sido guardado con exito, una vez que realices la transferencia
+        bancaria a la cuenta 7382947289239ADD con el coste del pedido, será procesado y enviado.
+    </p>
 
-        <table>
+    <h3>Datos del pedido:</h3>
+    Número de pedido: {{ pedido.getId }}
+    <br/>
+    Total a pagar: {{ pedido.getCoste }}
+    <br/>
+    Productos:
+           <table>
             <tr>
                 <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Unidades</th>
             </tr>
-            @foreach($productos_en_pedido as $producto)
-                <tr>
-                    <td><img src="{{route('productoimagen',['nombre_imagen'=>$producto->imagen])}}" class="img_carrito" /></td>
-                    <td>{{ $producto->nombre }}</td>
-                    <td>{{ $producto->precio }}</td>
-                    <td>{{ $producto->pivot->unidades }}</td>
-                </tr>
+               {#
+               {% for producto in productos_en_pedido %}
+                    <tr>
+                        <td><img src="{{ path('productoimagen',{'nombre_imagen': producto.imagen})}}" class="img_carrito"/></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ producto.getUnidades }}</td>
+                    </tr>
 
-            @endforeach
+                {% endfor %}
+                #}</table>
+            </div>
+{% endblock %}
 
-        </table>
-    </div>
-@endsection
+

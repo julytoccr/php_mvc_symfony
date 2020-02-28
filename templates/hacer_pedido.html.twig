@@ -1,17 +1,16 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
+{% block contenidocentral %}
     <!-- CONTENIDO CENTRAL -->
-    @if(session('identity'))
+    {% if app.session.get('identity') %}
     <div id="central">	<h1>Hacer pedido</h1>
         <p>
-            <a href={{ route('carritoindex') }}>Ver los productos y el precio del pedido</a>
+            <a href={{ path('carritoindex') }}>Ver los productos y el precio del pedido</a>
         </p>
         <br/>
-
         <h3>Dirección para el envio:</h3>
-        <form action={{ route('pedidoadd') }} method="POST">
-            @csrf
+        <form action={{ path('pedidoadd') }} method="POST">
+
             <label for="provincia">Provincia</label>
             <input type="text" name="provincia" required />
 
@@ -24,11 +23,10 @@
             <input type="submit" value="Confirmar pedido" />
         </form>
     </div>
-    @else
-        <div id="central">	<h1>Necesitas estar identificado</h1>
-            <p>Necesitas estar logueado en la web para poder realizar tu pedido.</p>
+    {% else %}
+    <div id="central">	<h1>Necesitas estar identificado</h1>
+        <p>Necesitas estar logueado en la web para poder realizar tu pedido.</p>
+    </div>
+    {% endif %}
+{% endblock %}
 
-
-        </div>
-    @endif
-@endsection
