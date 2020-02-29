@@ -16,7 +16,8 @@ class ProductoController extends AbstractController
         $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
 
         //Leo todos los productos
-        $productos = $this->getDoctrine()->getRepository(Productos::class)->findAll();
+        $productos = $this->getDoctrine()->getRepository(Productos::class)
+            ->findAll();
 
 
         return $this->render('listado_productos.html.twig',[

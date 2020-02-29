@@ -135,14 +135,14 @@ class PedidoController extends AbstractController
         //Tomo todas la categorias para pasarsela a la vista(menu)
         $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
 
-        //Busco el usuario que esta logueado para tomar sus pedidos
-        $usuario=$this->getDoctrine()->getRepository(Usuarios::class)
-            ->find($this->get('session')->get('usuario')->getId());
+        //Leo todos los pedidos
+        $pedidos = $this->getDoctrine()->getRepository(Pedidos::class)
+            ->findAll();
 
         //Paso datos a vista y renderizo
         return $this->render('gestion_pedidos.html.twig',[
             'categorias'=>$categorias,
-            'pedidos'=>$usuario->getPedidos(),
+            'pedidos'=>$pedidos,
         ]);
     }
 
