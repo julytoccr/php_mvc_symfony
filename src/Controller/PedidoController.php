@@ -120,10 +120,15 @@ class PedidoController extends AbstractController
     }
 
 
-    public function detalle(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PedidoController.php',
+    public function detalle($id){
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        $pedido=$this->getDoctrine()->getRepository(Pedidos::class)->find($id);
+
+        return $this->render('detalle_pedido.html.twig',[
+            'categorias'=>$categorias,
+            'pedido'=>$pedido
         ]);
     }
 
