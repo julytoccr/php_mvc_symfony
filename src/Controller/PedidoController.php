@@ -106,12 +106,23 @@ class PedidoController extends AbstractController
         ]);
     }
 
+
     public function mis_pedidos(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PedidoController.php',
+
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        //Busco el usuario que esta logueado para tomar sus pedidos
+        $usuario=$this->getDoctrine()->getRepository(Usuarios::class)
+            ->find($this->get('session')->get('usuario')->getId());
+
+        //Paso datos a vista y renderizo
+        return $this->render('gestion_pedidos.html.twig',[
+            'categorias'=>$categorias,
+            'pedidos'=>$usuario->getPedidos(),
         ]);
     }
+
 
     public function detalle(){
         return $this->json([
@@ -121,9 +132,17 @@ class PedidoController extends AbstractController
     }
 
     public function gestion(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PedidoController.php',
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        //Busco el usuario que esta logueado para tomar sus pedidos
+        $usuario=$this->getDoctrine()->getRepository(Usuarios::class)
+            ->find($this->get('session')->get('usuario')->getId());
+
+        //Paso datos a vista y renderizo
+        return $this->render('gestion_pedidos.html.twig',[
+            'categorias'=>$categorias,
+            'pedidos'=>$usuario->getPedidos(),
         ]);
     }
 

@@ -70,15 +70,15 @@ class Pedidos
      */
     private $hora;
 
+
+
+
     /**
-     * @var \Usuarios
-     *
-     * @ORM\ManyToOne(targetEntity="Usuarios")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Usuarios",inversedBy="pedidos")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     private $usuario;
+
 
     public function getId(): ?int
     {

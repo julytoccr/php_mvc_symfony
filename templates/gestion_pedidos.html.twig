@@ -1,37 +1,43 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
-    <!-- CONTENIDO CENTRAL -->
+{% block contenidocentral %}
+<!-- CONTENIDO CENTRAL -->
 
 
-    <div id="central">	<h1>Gestionar pedidos</h1>
-        @if(session('id'))
-            <strong class="alert_green">Pedido {{ session('id') }} modificado</strong>
-        @endif
-        <table>
-            <tr>
-                <th>Nº Pedido</th>
-                <th>Coste</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>Usuario</th>
-            </tr>
+<div id="central">	<h1>Gestionar pedidos</h1>
+{#
+    @if(session('id'))
+    <strong class="alert_green">Pedido {{ session('id') }} modificado</strong>
+    @endif#}
+    <table>
+        <tr>
+            <th>Nº Pedido</th>
+            <th>Coste</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Usuario</th>
+        </tr>
 
-            @foreach($pedidos as $pedido)
-                <tr>
-                    <td>
-                        <a href={{route('pedidodetalle',['id'=>$pedido->id])}}>{{$pedido->id}}</a>
-                    </td>
-                    <td>
-                        {{$pedido->coste}} $
-                    </td>
-                    <td>
-                        {{$pedido->fecha}}			</td>
-                    <td>
-                        {{$pedido->estado}}			</td>
-                    <td>
-                        {{$pedido->usuario->nombre}}                </td>
-                </tr>
-            @endforeach
-        </table></div>
-@endsection
+        {% for pedido in pedidos %}
+        <tr>
+            <td>
+                <a href={{path('pedidodetalle',{'id':pedido.getId})}}>{{pedido.getId}}</a>
+            </td>
+            <td>
+                ${{pedido.getCoste}}
+            </td>
+            <td>
+               aaa
+            </td>
+            <td>
+                {{pedido.getEstado}}
+            </td>
+            <td>
+                {{pedido.getUsuario.getNombre}}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table></div>
+
+{% endblock %}

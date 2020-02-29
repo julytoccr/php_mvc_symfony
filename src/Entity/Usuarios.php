@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -64,10 +65,40 @@ class Usuarios
      */
     private $imagen;
 
+
+
+
+    public function __construct()
+    {
+        $this->pedidos= new ArrayCollection();
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Pedidos",mappedBy="usuario",orphanRemoval=true)
+     */
+    private $pedidos;
+
+
+    public function getPedidos()
+    {
+        return $this->pedidos;
+    }
+
+    public function setPedidos(ArrayCollection $pedidos)
+    {
+        $this->pedidos = $pedidos;
+    }
+
+
+
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+
 
     public function getNombre(): ?string
     {
