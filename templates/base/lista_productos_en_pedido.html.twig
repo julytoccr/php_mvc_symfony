@@ -1,0 +1,21 @@
+{% for producto in pedido.getLineasPedido %}
+    {# de la entidad Productos se implemento __toString()
+    para que me devuelva los 3 datos necesarios
+    todo junto con esto se evita la relacion por ahora
+    #}
+    {% set datos_producto = producto.getProducto|split('|') %}
+    <tr>
+        <td>
+            <img src="{{ path('productoimagen',{'nombre_imagen':  datos_producto[2] })}}" class="img_carrito"/>
+        </td>
+        <td>
+            {{ datos_producto[0] }}
+        </td>
+        <td>
+            {{ datos_producto[1] }}
+        </td>
+        <td>
+            {{ producto.getUnidades }}
+        </td>
+    </tr>
+{% endfor %}

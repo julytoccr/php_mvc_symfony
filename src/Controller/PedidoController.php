@@ -147,11 +147,30 @@ class PedidoController extends AbstractController
         ]);
     }
 
-    public function estado(){
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PedidoController.php',
-        ]);
+    public function estado(Request $request){
+
+        $id_pedido=$request->request->get('id');
+        $estado=$request->request->get('estado');
+
+        //Leo todos los pedidos
+        $pedido = $this->getDoctrine()->getRepository(Pedidos::class)
+            ->find($id_pedido);
+
+        $pedido->setEstado($estado);
+
+        //preparo el em para grabar datos en la bd
+        $entityManager = $this->getDoctrine()->getManager();
+
+        //grabo el pedido
+        $entityManager->persist($pedido);
+        $entityManager->flush();
+
+        $this->addFlash(
+            'id',
+            $id_pedido
+        );
+
+        return $this->redirectToRoute('pedidogestion');
     }
 
 }
