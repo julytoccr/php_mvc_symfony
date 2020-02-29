@@ -182,4 +182,28 @@ class Pedidos
     }
 
 
+
+    public function __construct()
+    {
+        $this->lineas_pedido= new ArrayCollection();
+    }
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="LineasPedidos",mappedBy="pedido",orphanRemoval=true)
+     */
+    private $lineas_pedido;
+
+
+    public function getLineasPedido()
+    {
+        return $this->lineas_pedido;
+    }
+
+    public function setLineasPedido(ArrayCollection $lineas_pedido)
+    {
+        $this->lineas_pedido = $lineas_pedido;
+    }
+
+
 }

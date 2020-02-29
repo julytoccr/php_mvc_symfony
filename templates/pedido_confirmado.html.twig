@@ -7,7 +7,6 @@
         Tu pedido ha sido guardado con exito, una vez que realices la transferencia
         bancaria a la cuenta 7382947289239ADD con el coste del pedido, será procesado y enviado.
     </p>
-
     <h3>Datos del pedido:</h3>
     Número de pedido: {{ pedido.getId }}
     <br/>
@@ -21,18 +20,22 @@
                 <th>Precio</th>
                 <th>Unidades</th>
             </tr>
-               {#
-               {% for producto in productos_en_pedido %}
+               {% for producto in pedido.getLineasPedido %}
+                   {# de la entidad Productos se implemento __toString()
+                     para que me devuelva los 3 datos necesarios
+                     todo junto con esto se evita la relacion por ahora
+                    #}
+                   {% set datos_producto = producto.getProducto|split('|') %}
                     <tr>
-                        <td><img src="{{ path('productoimagen',{'nombre_imagen': producto.imagen})}}" class="img_carrito"/></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <img src="{{ path('productoimagen',{'nombre_imagen':  datos_producto[2] })}}" class="img_carrito"/>
+                        </td>
+                        <td>{{ datos_producto[0] }}</td>
+                        <td>{{ datos_producto[1] }}</td>
                         <td>{{ producto.getUnidades }}</td>
                     </tr>
 
                 {% endfor %}
-                #}</table>
+                </table>
             </div>
 {% endblock %}
-
-

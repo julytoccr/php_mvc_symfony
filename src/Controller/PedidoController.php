@@ -96,13 +96,9 @@ class PedidoController extends AbstractController
 
         $pedido=$this->getDoctrine()->getRepository(Pedidos::class)->find($id);
 
-        $productos_en_pedido=$this->getDoctrine()->getRepository(LineasPedidos::class)
-            ->findBy(['pedido'=>$pedido->getId()]);
-
         return $this->render('pedido_confirmado.html.twig',[
             'categorias'=>$categorias,
-            'pedido'=>$pedido,
-            'productos_en_pedido'=>$productos_en_pedido
+            'pedido'=>$pedido
         ]);
     }
 
