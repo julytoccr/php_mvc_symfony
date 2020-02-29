@@ -1,5 +1,9 @@
 {% extends 'base/layout.html.twig' %}
 
+{% block titulo %}
+    Listar Carrito
+{% endblock %}
+
 {% block contenidocentral %}
     <div id="central"><h1>Carrito de la compra</h1>
         {% if carrito|length >0 %}

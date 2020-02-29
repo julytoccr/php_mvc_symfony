@@ -1,8 +1,10 @@
 <!DOCTYPE HTML>
 <html lang="es">
-
-{{ include('base/head.html.twig') }}
-
+<head>
+      <meta charset="utf-8" />
+      <title>{% block titulo %}{% endblock %}</title>
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+</head>
 <body>
 <div id="container">
 

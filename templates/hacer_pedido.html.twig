@@ -1,5 +1,9 @@
 {% extends 'base/layout.html.twig' %}
 
+{% block titulo %}
+    Hacer Pedido
+{% endblock %}
+
 {% block contenidocentral %}
     <!-- CONTENIDO CENTRAL -->
     {% if app.session.get('identity') %}
