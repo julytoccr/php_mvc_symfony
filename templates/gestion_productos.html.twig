@@ -1,48 +1,61 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
-    <!-- CONTENIDO CENTRAL -->
-    <div id="central"><h1>Gestión de productos</h1>
-        @if(session('productoborrado'))
-            <strong class="alert_green">Producto {{session('productoborrado')}} borrado Correctamente</strong>
-        @endif
-        @if(session('altaproducto'))
-            @if(session('altaproducto')==1)
-                <strong class="alert_green">Producto Creado Correctamente</strong>
-            @else
-                <strong class="alert_red">Producto no creado</strong>
-            @endif
-        @endif
-        @if(session('updateproducto'))
-            @if(session('updateproducto')==1)
-                <strong class="alert_green">Producto Modificado Correctamente</strong>
-            @else
-                <strong class="alert_red">Producto no modificado</strong>
-            @endif
-        @endif
-        <a href={{ route('productocrear') }} class="button button-small">
-            Crear producto
-        </a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>NOMBRE</th>
-                <th>PRECIO</th>
-                <th>STOCK</th>
-                <th>ACCIONES</th>
-            </tr>
-            @foreach($productos as $producto)
-                <tr>
-                    <td>{{$producto->id}}</td>
-                    <td>{{$producto->nombre}}</td>
-                    <td>{{$producto->precio}}</td>
-                    <td>{{$producto->stock}}</td>
-                    <td>
-                        <a href={{ route('productoeditar',['id'=>$producto['id']]) }} class="button button-gestion">Editar</a>
-                        <a href={{ route('productoeliminar',['id'=>$producto['id']]) }} class="button button-gestion button-red">Eliminar</a>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-    </div>
-@endsection
+{% block titulo %}
+    Gestion de Productos
+{% endblock %}
+
+{% block contenidocentral %}
+<!-- CONTENIDO CENTRAL -->
+<div id="central"><h1>Gestión de productos</h1>
+
+ {#    @if(session(''))
+    <strong class="alert_green">Producto {{session('productoborrado')}} borrado Correctamente</strong>
+    @endif
+    @if(session('altaproducto'))
+    @if(session('altaproducto')==1)
+    <strong class="alert_green">Producto Creado Correctamente</strong>
+    @else
+    <strong class="alert_red">Producto no creado</strong>
+    @endif
+    @endif
+    @if(session('updateproducto'))
+    @if(session('updateproducto')==1)
+    <strong class="alert_green">Producto Modificado Correctamente</strong>
+    @else
+    <strong class="alert_red">Producto no modificado</strong>
+    @endif
+    @endif
+    #}
+
+    {% for productoborrado in app.session.flashbag.get('productoborrado') %}
+        {% if productoborrado %}
+            <strong class="alert_green">Producto {{ productoborrado }} borrado</strong>
+        {% endif %}
+    {% endfor %}
+
+    <a href={{ path('productocrear') }} class="button button-small">
+    Crear producto
+    </a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>PRECIO</th>
+            <th>STOCK</th>
+            <th>ACCIONES</th>
+        </tr>
+        {% for producto in productos %}
+        <tr>
+            <td>{{producto.getId}}</td>
+            <td>{{producto.getNombre}}</td>
+            <td>{{producto.getPrecio}}</td>
+            <td>{{producto.getStock}}</td>
+            <td>
+                <a href={{ path('productoeditar',{'id':producto.getId}) }} class="button button-gestion">Editar</a>
+                <a href={{ path('productoeliminar',{'id':producto.getId}) }} class="button button-gestion button-red">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

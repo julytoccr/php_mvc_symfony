@@ -34,9 +34,16 @@ class ProductoController extends AbstractController
     }
 
     public function gestion(){
-        return $this->json([
-            'message' => 'Weaaalcome to your new controller!',
-            'path' => 'src/Controller/ProductoController.php',
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        //Leo todos los productos
+        $productos = $this->getDoctrine()->getRepository(Productos::class)
+            ->findAll();
+
+        return $this->render('gestion_productos.html.twig',[
+            'categorias'=>$categorias,
+            'productos'=>$productos
         ]);
     }
 
@@ -61,11 +68,25 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    public function eliminar(){
-        return $this->json([
-            'message' => 'Weaaalcome to your new controller!',
-            'path' => 'src/Controller/ProductoController.php',
-        ]);
+    public function eliminar($id)
+    {
+        //Tomo todas la categorias para pasarsela a la vista(menu)
+        $categorias = $this->getDoctrine()->getRepository(Categorias::class)->findAll();
+
+        //Leo todos los productos
+        $producto = $this->getDoctrine()->getRepository(Productos::class)
+            ->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($producto);
+        $entityManager->flush();
+
+        $this->addFlash(
+            'productoborrado',
+            $producto->getNombre()
+        );
+
+        return $this->redirectToRoute('productogestion');
     }
 
     public function obtenerImagen($nombre_imagen){
