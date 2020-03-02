@@ -7,32 +7,21 @@
 {% block contenidocentral %}
 <!-- CONTENIDO CENTRAL -->
 <div id="central"><h1>Gestión de productos</h1>
-
- {#    @if(session(''))
-    <strong class="alert_green">Producto {{session('productoborrado')}} borrado Correctamente</strong>
-    @endif
-    @if(session('altaproducto'))
-    @if(session('altaproducto')==1)
-    <strong class="alert_green">Producto Creado Correctamente</strong>
-    @else
-    <strong class="alert_red">Producto no creado</strong>
-    @endif
-    @endif
-    @if(session('updateproducto'))
-    @if(session('updateproducto')==1)
-    <strong class="alert_green">Producto Modificado Correctamente</strong>
-    @else
-    <strong class="alert_red">Producto no modificado</strong>
-    @endif
-    @endif
-    #}
-
+    {% for altaproducto in app.session.flashbag.get('altaproducto') %}
+        {% if altaproducto %}
+            <strong class="alert_green">Producto {{ altaproducto }} creado</strong>
+        {% endif %}
+    {% endfor %}
+    {% for updateproducto in app.session.flashbag.get('updateproducto') %}
+        {% if updateproducto %}
+            <strong class="alert_green">Producto {{ updateproducto }} modificado</strong>
+        {% endif %}
+    {% endfor %}
     {% for productoborrado in app.session.flashbag.get('productoborrado') %}
         {% if productoborrado %}
             <strong class="alert_green">Producto {{ productoborrado }} borrado</strong>
         {% endif %}
     {% endfor %}
-
     <a href={{ path('productocrear') }} class="button button-small">
     Crear producto
     </a>

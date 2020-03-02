@@ -1,56 +1,47 @@
-@extends('base.layout')
+{% extends 'base/layout.html.twig' %}
 
-@section('contenidocentral')
-    <!-- CONTENIDO CENTRAL -->
-    <div id="central">
+{% block titulo %}
+    Gestion de Producto
+{% endblock %}
 
-        @isset($producto)
-            <h1>Editar producto {{$producto->nombre}}</h1>
-        @else
-            <h1>Alta de producto</h1>
-        @endisset
-
-
-        <div class="form_container">
-
-            @isset($producto)
-                <form action={{ route('productosave',['id' => $producto->id]) }} method="POST" enctype="multipart/form-data">
-            @else
-                <form action={{ route('productosave') }} method="POST" enctype="multipart/form-data">
-            @endisset
-
-                @csrf
+{% block contenidocentral %}
+<!-- CONTENIDO CENTRAL -->
+<div id="central">
+    {% if producto is defined %}
+        <h1>Editar producto {{producto.getNombre}}</h1>
+    {% else %}
+        <h1>Alta de producto</h1>
+    {% endif %}
+    <div class="form_container">
+        {% if producto is defined %}
+           <form action={{ path('productosave',{'id':producto.getId}) }} method="POST" enctype="multipart/form-data">
+        {% else %}
+            <form action={{ path('productosave') }} method="POST" enctype="multipart/form-data">
+         {% endif %}
                 <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" value={{ isset($producto) ? $producto->nombre : '' }}>
-
+                <input type="text" name="nombre" value={{ producto.getNombre ??  '' }}>
                 <label for="descripcion">Descripción</label>
-                <textarea name="descripcion">{{ isset($producto) ? $producto->descripcion : '' }}</textarea>
-
+                <textarea name="descripcion">{{ producto.getDescripcion ??  '' }}</textarea>
                 <label for="precio">Precio</label>
-                <input type="text" name="precio" value={{ isset($producto) ? $producto->precio : '' }}>
-
+                <input type="text" name="precio" value={{ producto.getPrecio ??  '' }}>
                 <label for="stock">Stock</label>
-                <input type="number" name="stock" value={{ isset($producto) ? $producto->stock : '' }}>
-
+                <input type="number" name="stock" value={{ producto.getStock ??  '' }}>
                 <label for="categoria">Categoria</label>
                 <select name="categoria">
-                    @foreach($categorias as $categoria)
-                        @isset($producto)
-                          <option value={{$categoria->id}} {{ ($categoria->id==$producto->categoria_id) ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
-                        @else
-                          <option value={{$categoria->id}}>{{ $categoria->nombre }}</option>
-                        @endif
-                    @endforeach
+                    {% for categoria in categorias %}
+                        {% if producto is defined %}
+                          <option value={{categoria.getId}} {{ (categoria.getId==producto.getCategoria.getId) ? 'selected' : '' }}>{{ categoria.getNombre }}</option>
+                        {% else %}
+                           <option value={{categoria.getId}}>{{ categoria.getNombre }}</option>
+                        {% endif %}
+                    {% endfor %}
                 </select>
-
                 <label for="imagen">Imagen</label>
-                    @isset($producto)
-                        <img src="{{route('productoimagen',['nombre_imagen'=>$producto->imagen])}}" class="img_carrito" />
-                    @endisset
+                {% if producto is defined %}
+                   <img src="{{ path('productoimagen',{'nombre_imagen': producto.getImagen})}}" class="img_carrito"/>
+                {% endif %}
                 <input type="file" name="imagen" />
-
                 <input type="submit" value="Guardar" />
             </form>
-
-        </div></div>
-@endsection
+    </div></div>
+{% endblock %}
