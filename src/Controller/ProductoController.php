@@ -64,7 +64,7 @@ class ProductoController extends AbstractController
         $precio=$request->request->get('precio');
         $stock=$request->request->get('stock');
         $categoria=$request->request->get('categoria');
-        $imagen=$request->request->get('imagen');
+        $imagen=$request->files->get('imagen');
         $entityManager = $this->getDoctrine()->getManager();
 
         if($id){
@@ -75,9 +75,10 @@ class ProductoController extends AbstractController
                 'updateproducto',$nombre
             );
             if($imagen){
-                $producto->setImagen($imagen);
+                $archivo_a_grabar=uniqid().$imagen->getClientOriginalName();
+                $producto->setImagen($archivo_a_grabar);
                 //Aca greabo la imagen en dir de imagen
-
+                $imagen->move ( "./assets/imagesremeras", $archivo_a_grabar );
             }
         }
         else{
@@ -89,8 +90,9 @@ class ProductoController extends AbstractController
             $fecha = new \DateTime();
             $producto->setFecha($fecha);
             if($imagen){
-                $producto->setImagen($imagen);
-                //Aca greabo la imagen en dir de imagen
+                $archivo_a_grabar=uniqid().$imagen->getClientOriginalName();
+                $imagen->move ( "./assets/imagesremeras", $archivo_a_grabar );
+                $producto->setImagen($archivo_a_grabar);
             }
             else{
                 //pongo una imagen por defecto
